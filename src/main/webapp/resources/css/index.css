@@ -1,0 +1,57 @@
+#principal{
+    width: 1024px;
+    margin: 0 auto;
+    background-image: url(../resources/images/SIFFONDO.png);
+}
+
+#cuadro{    
+    margin: 50px auto;
+    width: 500px;
+    font-size: small;
+    text-align: center;
+}
+
+
+#Tablaimprimir33{
+    width: 1024px;
+    margin: 0 auto;
+    font-size: x-small !important;
+    text-align: center;
+}
+
+#top {
+   font-size: x-small !important;    
+}
+
+#datatablecss {
+    width: 1024px;
+    margin: 0 auto;
+    font-size: x-small !important;
+    text-align: center;
+}
+
+#firmascss{
+    margin: 50px auto;
+    width: 500px;
+    font-size: small;
+    text-align: center
+    
+}
+#activoscss {
+    width: 1024px;
+    margin: 0 auto;
+    font-size: x-small !important;
+    }
+    
+#frmactivoscss {
+    width: 1024px;
+    margin: 0 auto;
+    font-size: x-small !important;
+    }
+
+#tblactivoscss {
+    width: 1024px;
+    margin: 0 auto;
+    font-size: x-small !important;
+    text-align: center
+    }

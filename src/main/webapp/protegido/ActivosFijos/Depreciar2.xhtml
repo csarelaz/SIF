@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/plantilla.xhtml">
+            
+            <ui:define name="content">
+                <p:growl autoUpdate="true" showDetail="true" showSummary="false"/>
+                <div id="tblactivoscss">
+                
+                     <h:form id="frmPrincipal">
+                    <h1 align="center">Depreciacion Activos </h1>
+               
+                <p:dataTable id="Activos" emptyMessage="Nigún activo Listado" value="#{depreciar2Controller.activos}" var="act" 
+                            paginator="true" rows="10"
+                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            rowsPerPageTemplate="5,10,15,20" currentPageReportTemplate="Página: ({currentPage} de {totalPages})">
+                       
+                 
+                        <p:column headerText="Descripción" filterBy="#{act.descripcion}" filterMatchMode="contains">
+                            <h:outputText value="#{act.descripcion}" />
+                        </p:column>
+                        
+                        <p:column headerText="Valor Contable">
+                                        <h:outputText value="#{act.valContable}">
+                                        <f:convertNumber type="currency" currencySymbol="$" />
+                                        </h:outputText>
+                        </p:column>
+                        
+                        <p:column headerText="Valor Residual">
+                                        <h:outputText value="#{act.valResidual}">
+                                        <f:convertNumber type="currency" currencySymbol="$" />
+                                        </h:outputText>
+                        </p:column>
+                                              
+                         <p:column headerText="Valor en Libros">
+                                        <h:outputText value="#{act.valLibros}">
+                                        <f:convertNumber type="currency" currencySymbol="$" />
+                                        </h:outputText>
+                        </p:column>
+                        
+                         <p:column headerText="Valor Depreciación Acumulada:">
+                                        <h:outputText value="#{act.valDepAcum}">
+                                        <f:convertNumber type="currency" currencySymbol="$" />
+                                        </h:outputText>
+                        </p:column>                        
+                                               
+                         <p:column headerText="Fecha última depreciación">
+                                        <h:outputText value="#{act.fechaDep}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                        </p:column>  
+                    
+                        <p:column headerText="Vida Útil">
+                                        <h:outputText value="#{act.vidaUtil}">
+                                        </h:outputText>
+                        </p:column>
+                    
+                        <p:column headerText="Fecha de Ingreso" filterBy="#{act.fecha_Ingreso}" filterMatchMode="contains">
+                            <h:outputText value="#{act.fecha_Ingreso}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                        </p:column>
+                    
+                    <p:column headerText="Estado Fisico" filterBy="#{act.estadoFisico}" filterMatchMode="contains">
+                        <h:outputText value="#{act.estadoFisico}" />
+                        </p:column>
+
+                    <p:column style="width:32px;text-align: center">
+                        <p:commandButton icon="ui-icon-search" actionListener="#{depControl.Depreciar(event)}" />
+                    </p:column>
+            </p:dataTable>
+        </h:form>
+                    
+                </div>
+        </ui:define>
+        </ui:composition>
+    </body>
+     
+</html>

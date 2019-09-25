@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/plantilla.xhtml">
+
+            <ui:define name="content">
+                <div id="frmactivoscss" title="Ingrese las dependencias">
+                <h:form>
+                      <p:messages id="mensaje" autoUpdate="false" severity="info, fatal" showSummary="true" showDetail="true"/>
+                    <p:fieldset legend="Ingresar Nueva Dependencia" >
+                           <h:panelGrid columns="3" id="pgDatos">
+                              <p:outputLabel for="txtDescripcion" value="Descripción Dependencia" />
+                              <p:inputText id="txtDescripcion" value="#{dependenciaController.dependencia.descripcion_Dep}" required="true" />
+                              <p:message for="txtDescripcion" />
+
+                              <p:outputLabel for="txtLugar" value="Lugar" />            
+                              <p:inputText id="txtLugar" value="#{dependenciaController.dependencia.lugar_Dep}" required="true"/>
+                              <p:message for="txtLugar" />
+           
+                              <p:outputLabel for="txtreferencia" value="Referencia" />
+                              <p:inputText id="txtreferencia" value="#{dependenciaController.dependencia.referencia_Dep}" required="false" />
+                              <p:message for="txtreferencia" />
+                     
+                                                          
+                          </h:panelGrid>
+                    </p:fieldset>
+                      <p:commandButton icon="ui-icon-check" value="Registrar" update="pgDatos, mensaje" actionListener="#{dependenciaController.registrar()}"/>
+                        
+                  </h:form>
+                    
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

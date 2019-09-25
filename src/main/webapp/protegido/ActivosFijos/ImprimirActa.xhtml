@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/plantilla.xhtml">
+
+            <ui:define name="top">
+                <h1 align="center">Universidad Central del Ecuador</h1>
+                <h2 align="center">Facultad de Ingenieria Ciencias Físicas y Matematica</h2>
+                <h3 align="center"> Acta de Activos </h3>
+             </ui:define>
+            
+            
+            <ui:define name="content">
+
+               <h:form>
+                   <p:outputPanel deferred="True">
+                       <p>Hoy  en las oficinas de Departamento Finanaciero de la Universidad Central del Ecuador,
+                           mediante el presente documento se realiza la entrega formal de los Activos que se indican el punto 
+                           2.-  ACTIVOS ASIGNADOS para el cumplimiento de las actividades laborales del FUNCIONARIO RESPONSABLE, 
+                           quién declara recepción de los mismos en buen estado y se compromete a cuidar de los recursos y hacer uso de ellos para los fines establecidos.</p>  
+                       
+                            <p>
+                               <h2>1. Funcionario responsable</h2>
+                               <p:panelGrid columns="2">
+                                    <h:outputText value="Nombre" />
+                                    <h:outputText value="#{consultaActivoController.nomina.apellidos} #{consultaActivoController.nomina.nombres}" />
+
+                                    <h:outputText value="Cédula" />
+                                    <h:outputText value="#{consultaActivoController.nomina.CI}" />
+
+                                    <h:outputText value="Dependencia" />
+                                    <h:outputText value="#{consultaActivoController.dependencia.referencia_Dep}" />
+                                   
+                               </p:panelGrid>
+                               
+                           </p>
+                       
+                   </p:outputPanel>
+                                      
+                   
+                </h:form>
+                
+                <h:form id="frmactivos">
+                   
+                    <p:dataTable id="tabla" emptyMessage="Niguna Linea registrada" value="#{consultaActivoController.activos}" var="act" >
+
+                        <p:column headerText = "Codigo Activo" style="width:100px">
+                            <h:outputText value="#{act.cod_Actual}"/>
+                        </p:column>
+                        
+                        <p:column headerText = "Descripción Activo" >
+                            <h:outputText value="#{act.descripcion}" style="width:300px"/>
+                        </p:column>
+                        <p:column headerText = "Estado" style="width:100px">
+                            <h:outputText value="#{act.estadoFisico}"/>
+                        </p:column>
+                                                                  
+                   
+                    </p:dataTable>
+                </h:form> 
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

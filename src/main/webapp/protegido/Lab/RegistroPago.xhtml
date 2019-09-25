@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/plantilla.xhtml">
+
+            <ui:define name="content">
+                <h1 align="Center">Realizar Pago</h1> 
+              <p:fieldset legend="Datos de la Orden" >
+                
+                <h:form>
+                    <h:panelGrid columns="2" >
+                        
+                          
+                        <h:outputText value="Orden" />
+                        <h:outputText value="#{registrarPagoController.orden.idOrdenes}"/>
+                        
+                        <h:outputText value="Total" />
+                        <h:outputText value="#{registrarPagoController.orden.totalorden}">
+                            <f:convertNumber type="currency" currencySymbol="$" />
+                        </h:outputText>
+                        
+                        <h:outputText value="Cliente" />
+                        <h:outputText value="#{registrarPagoController.orden.cliente.nombres_Cliente} #{registrarPagoController.orden.cliente.apellidos_Cliente}"/>
+                        
+                        <h:outputText value="Cédula" />
+                        <h:outputText value="#{registrarPagoController.orden.cliente.CI_Cliente}"/>
+                        
+                        
+                        <h:outputText value="Departamento" />
+                        <h:outputText value="#{registrarPagoController.orden.departamento.nombre_Dep}"/>
+                        
+                        <p:outputLabel for="Estado" value="Registrar la Orden de Venta como: " />
+                            <p:selectOneMenu id="Estado" value = "#{registrarPagoController.orden.estado}"  >
+                                <f:selectItem itemLabel="Pagado" itemValue="Pagado"/>
+                                <f:selectItem itemLabel="Registrado" itemValue="Registrado" itemDisabled="True"/>
+                                <f:selectItem itemLabel="Anulado" itemValue="Anulado" itemDisabled="True" />
+                            </p:selectOneMenu>
+                        
+                        
+                        <p:commandButton value="Registrar Pago" icon="ui-icon-check" actionListener="#{registrarPagoController.EditarOrden()}" action="CancelarOrden"/>
+                    </h:panelGrid>
+                </h:form>
+                  
+                  </p:fieldset>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

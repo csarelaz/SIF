@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/plantilla.xhtml">
+
+            <ui:define name="content">
+                
+                <div id="tblactivoscss">
+                 <h:form id="frmPrincipal">
+                    <p:messages autoUpdate="true" showSummary="false" showDetail="true"/>
+                    <h1 align="center">Editar estado de Ordenes</h1>
+                    
+
+                <p:dataTable id ="tblorden1" widgetVar="OrdenTbl1" emptyMessage="Nigúna Orden registrada" value="#{ordenController.ordenes}" var="ordenlst"
+                             scrollable="true" scrollHeight="800">
+                                            
+                         <p:column style="width:32px">
+                             <p:commandButton actionListener="#{ordenController.asignar(ordenlst)}" action="AnulaPago" icon="ui-icon-cart" title="Editar Pago" />
+                        </p:column>   
+                    
+                        <p:column headerText="Cliente CI" filterBy="#{ordenlst.cliente.CI_Cliente}" filterMatchMode="contains">
+                            <h:outputText value="#{ordenlst.cliente.CI_Cliente}" />
+                        </p:column>
+                        
+                        <p:column headerText="Nombre" filterBy="#{ordenlst.cliente.nombres_Cliente}" filterMatchMode="contains">
+                            <h:outputText value="#{ordenlst.cliente.nombres_Cliente}" />
+                        </p:column>
+                        
+                        <p:column headerText="Apellido" filterBy="#{ordenlst.cliente.apellidos_Cliente}" filterMatchMode="contains">
+                            <h:outputText value="#{ordenlst.cliente.apellidos_Cliente}" />
+                        </p:column>
+
+                        <p:column headerText="Laboratorio" filterBy="#{ordenlst.departamento.nombre_Dep}" filterMatchMode="contains">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('OrdenTbl1').filter()" >
+                                    <f:selectItem itemLabel="Seleciona uno" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{ordenController.departamentos}"  var="dep" itemLabel="#{dep.nombre_Dep}" itemValue="#{dep.nombre_Dep}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+
+                            <h:outputText value="#{ordenlst.departamento.nombre_Dep}" />
+                        </p:column>
+
+                        <p:column headerText="Numero Orden" filterBy="#{ordenlst.idOrdenes}" filterMatchMode="contains">
+                            <h:outputText value="#{ordenlst.idOrdenes}"  />
+                        </p:column>
+                        
+                    <p:column headerText="Estado" filterBy="#{ordenlst.estado}" footerText="equals" filterMatchMode="equals">
+                            <f:facet name="filter">
+                            <p:selectOneButton onchange="PF('OrdenTbl1').filter()">
+                                
+                                <f:selectItem itemLabel="Todos" itemValue="" />
+                                <f:selectItem itemLabel="Pagado" itemValue="Pagado" />
+                                <f:selectItem itemLabel="Registrado" itemValue="Registrado" />
+                                <f:selectItem itemLabel="Anulado" itemValue="Anulado" />
+                            </p:selectOneButton>
+                            </f:facet>
+
+                        <h:outputText value="#{ordenlst.estado}" />
+                       
+                        </p:column>
+           
+                        <p:column headerText="Fecha" sortBy="#{ordenlst.fecha}">
+                                                       
+                            <h:outputText value="#{ordenlst.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>                        
+                        
+                        <p:column headerText="Total" >
+                            <h:outputText value="#{ordenlst.totalorden}">
+                                <f:convertNumber type="currency" currencySymbol="$" />
+                             </h:outputText>
+                        </p:column>
+                                      
+                </p:dataTable>      
+              </h:form>    
+                
+                 <p:dialog id="dialogo" widgetVar="wdialogo" header="Registrar Pago" modal="true" resizable="true" closeOnEscape="true">
+                    <h:form id="frmDialogo">
+                        <h:panelGrid columns="2">
+                            
+                            <p:outputLabel for="Estado" value="Registrar la Orden de Venta como: " />
+                            <p:selectOneMenu id="Estado" value = "#{ordenController.orden.estado}"  >
+                                <f:selectItem itemLabel="Pagado" itemValue="Pagado"/>
+                                <f:selectItem itemLabel="Registrado" itemValue="Registrado" itemDisabled="True"/>
+                                <f:selectItem itemLabel="Anulado" itemValue="Anulado" itemDisabled="True" />
+                            </p:selectOneMenu>
+           
+                            <p:commandButton value="Registrar" icon="ui-icon-check" update=":frmPrincipal:tblorden1" actionListener="#{ordenController.EditarOrden()}" oncomplete="PF('wdialogo').hide();"/>
+                            <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" />
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

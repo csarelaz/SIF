@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <p:messages autoUpdate="true" showSummary="false" showDetail="true"/>
+                    <h1 align="center">EDITAR CLIENTES</h1>
+
+        <ui:composition template="./../../WEB-INF/templates/plantilla.xhtml">
+
+            <ui:define name="content">
+                <p:growl autoUpdate="true" showDetail="true" showSummary="false"/>
+                <div id="tblactivoscss">
+     <h:form id="formcl">
+    
+    <p:dataTable id ="tblcli" widgetVar="clientes" editable="true" emptyMessage="Nigún Cliente registrado" value="#{clientesController.lstclientes}" var="clienlst"
+                            paginator="true" rows="10"
+                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            rowsPerPageTemplate="5,10,15,20" currentPageReportTemplate="Página: ({currentPage} de {totalPages})">
+       
+        <f:facet name="header">
+            Editar Clientes
+        </f:facet>
+ 
+        <p:ajax event="rowEdit" listener="#{clientesController.editar(clienlst)}"  />
+        <p:ajax event="rowEditCancel" listener="#{clientesController.onRowCancel}"  />
+ 
+        <p:column headerText="Nombre">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{clienlst.nombres_Cliente}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{clienlst.nombres_Cliente}" style="width:100%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+ 
+        <p:column headerText="Apellido">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{clienlst.apellidos_Cliente}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{clienlst.apellidos_Cliente}" style="width:100%" label="Apellido"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+ 
+        <p:column headerText="Cédula" filterBy="#{clienlst.CI_Cliente}" filterMatchMode="contains">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{clienlst.CI_Cliente}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{clienlst.CI_Cliente}" style="width:100%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+ 
+        <p:column headerText="Direccion">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{clienlst.dir_Cliente}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{clienlst.dir_Cliente}" style="width:100%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+        
+        <p:column headerText="Email">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{clienlst.email_Cliente}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{clienlst.email_Cliente}" style="width:100%"/></f:facet>
+            </p:cellEditor>
+         
+        </p:column>
+        
+        <p:column headerText="teléfono">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{clienlst.telefono_Cliente}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{clienlst.telefono_Cliente}" style="width:100%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+ 
+        <p:column style="width:35px">
+            <p:rowEditor />
+        </p:column>
+    </p:dataTable>
+          </h:form>      
+               </div> 
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

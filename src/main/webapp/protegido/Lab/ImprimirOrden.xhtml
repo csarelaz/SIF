@@ -1,0 +1,229 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body id="imprimirorden">
+
+        <ui:composition template="./../../WEB-INF/templates/plantilla.xhtml">
+            
+          
+            <ui:define name="top">
+                                
+            </ui:define>
+            <ui:define name="content">
+                
+                   <h:form>
+                   <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+                    <p:printer target=":frmlineasOrdenimp" />
+                    </p:commandButton>
+                       </h:form>
+
+               <h:form id="frmlineasOrdenimp">
+                <h1 align="center">Universidad Central del Ecuador</h1>
+                <h2 align="center">Facultad de Ingenieria Ciencias Físicas y Matematica</h2>
+                <h3 align="center"> LABORATORIO DE: <h:outputText value="#{lineasordenController.orden.departamento.nombre_Dep}"/> </h3>
+                
+                <div id="Tablaimprimir33" title="Ingrese sus Credenciales">  
+                    <p:fieldset>
+                    
+                        
+                        <h:panelGrid columns="4" >
+                   
+                        <h:outputText value="Cedula" />
+                        <h:outputText value="#{lineasordenController.orden.cliente.CI_Cliente}"/>
+                        
+                        <h:outputText value="Numero de orden" />
+                        <h:outputText value="#{lineasordenController.orden.idOrdenes}"/>                        
+                        
+                        
+                        <h:outputText value="Nombre Cliente" />
+                        <h:outputText value="#{lineasordenController.orden.cliente.nombres_Cliente} #{lineasordenController.orden.cliente.apellidos_Cliente}"/>
+                        
+                        <h:outputText value="Fecha" />
+                         <h:outputText value="#{lineasordenController.orden.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>                        
+                        
+                        
+                        <h:outputText value="Dirección" />
+                        <h:outputText value="#{lineasordenController.orden.cliente.dir_Cliente}"/>
+                        
+                        <h:outputText value="Total a Pagar" />
+                        <h:outputText value="#{lineasordenController.orden.totalorden}"/>
+                        
+
+                        <h:outputText value="Teléfono" />
+                        <h:outputText value="#{lineasordenController.orden.cliente.telefono_Cliente}"/>
+
+                        <h:outputText value="Email" />
+                        <h:outputText value="#{lineasordenController.orden.cliente.email_Cliente}"/>
+                       
+                    </h:panelGrid>
+                        </p:fieldset>
+                        <p:fieldset>
+                        <h:panelGrid columns="4" >
+                   
+                        <h:outputText value="Proyecto" />
+                        <h:outputText value="____________________" />  
+                                                
+                        <h:outputText value="Sector" />
+                        <h:outputText value="____________________" />                         
+                        
+                        
+                        <h:outputText value="Muestra" />
+                        <h:outputText value="____________________" /> 
+                        
+                        <h:outputText value="Contacto" />
+                         <h:outputText value="____________________" />                        
+                        
+                        
+                        <h:outputText value="Observaciónes de la muestra" />
+                        <h:outputText value="____________________" /> 
+                        
+                       
+                        </h:panelGrid>                       
+                   </p:fieldset>
+                   
+
+                         <p:dataTable id="tablaimp" emptyMessage="Niguna Linea registrada" value="#{lineasordenController.lstlineasorden}" var="lin" >
+
+                        <p:column headerText = "Codigo de Servicio" style="width:100px">
+                            <h:outputText value="#{lin.articulos.idArticulos}"/>
+                        </p:column>
+                        
+                        <p:column headerText = "Descripción Servicio" >
+                            <h:outputText value="#{lin.articulos.descripcion_Art}" style="width:300px"/>
+                        </p:column>
+                        <p:column headerText = "Cantidad" style="width:100px">
+                            <h:outputText value="#{lin.cantidad}"/>
+                        </p:column>
+                        <p:column headerText = "Precio Unitario" style="width:100px" >
+                            <h:outputText value="#{lin.articulos.costo_Art}"/>
+                        </p:column>
+                        <p:column headerText = "Total" style="width:100px" >
+                            <h:outputText value="#{lin.total}"/>
+                        </p:column>
+                                           
+                   
+                    </p:dataTable>
+                       
+                       
+                    </div>
+                <div id="firmascss">
+                            <h3>FIRMAS</h3>
+                            <p:panelGrid columns="4"  style="border-color:transparent">
+                                    <h:outputText value="LABORATORISTA" />
+                                    <h:outputText value="______________" />
+
+                                    <h:outputText value="DIRECTOR o TÉCNICO" />
+                                    <h:outputText value="______________" />
+
+                                  </p:panelGrid>
+                        </div>
+                                <div id="firmascss"> 
+                                  <p:panelGrid columns="2">
+                                 <h:outputText value="Observaciónes de Orden" />
+                                 <h:outputText value="#{lineasordenController.orden.observacion}"/>
+                                 </p:panelGrid>
+                                 </div>                     
+
+                <table width="780" cellspacing="2" cellpadding="3" border="0" bgcolor="#000000"> <!-- borde de la tabla-->
+                        <tr> 
+                           <td bgcolor="#ffffff"><font size="2" face="verdana, arial, helvetica">
+                                   <b>CONSIDERACIONES PARA LA PRESTACIÓN DEL SERVICIO</b></font></td> 
+                        </tr> 
+                        <tr> 
+                           <td bgcolor="#F5ECB9"> 
+                               <table  width="95%" cellspacing="1" cellpadding="1" border="0" align="center"> 
+                        
+                        <tr> 
+                           <td valign="top"><font face="verdana, arial, helvetica" size="1">
+                                <h:outputText value="1." />      
+                           </font></td> 
+                           
+                           <td><font face="verdana, arial, helvetica" size="1">
+                                <h:outputText value="Los análisis se realizan bajo las condiciones ambientales
+                                              (temperatura y humedad relativa) del laboratorio y se conservan y 
+                                              almacenan de acuerdo al procedimiento respectivo."/>
+                           </font></td> 
+                        </tr>
+                        
+                                   
+                        <tr> 
+                           <td valign="top"><font face="verdana, arial, helvetica" size="1">
+                                <h:outputText value="2." />      
+                           </font></td> 
+                           
+                           <td><font face="verdana, arial, helvetica" size="1">
+                                <h:outputText value="No exite responsabilidad por parte del 
+                                              laboratrio en cuanto a la cantidad de toma de 
+                                              muestra o la representatividad del la misma ya 
+                                              que no ha sido tomada bajo su supervisión."/>
+                           </font></td> 
+                        </tr>           
+                        
+                        <tr> 
+                           <td valign="top"><font face="verdana, arial, helvetica" size="1">
+                                <h:outputText value="3." />      
+                           </font></td> 
+                           
+                           <td><font face="verdana, arial, helvetica" size="1">
+                                <h:outputText value="Los resultados se enctregaràn en __ días 
+                                                    hábiles luego del pago y recepción de la muestra, 
+                                                    a excepción de el número de muestras o el análisis 
+                                                    requiera más tiempo"/>
+                           </font></td> 
+                        </tr>
+                                   
+                         
+                         <tr> 
+                           <td valign="top"><font face="verdana, arial, helvetica" size="1">
+                                <h:outputText value="4." />      
+                           </font></td> 
+                           
+                           <td><font face="verdana, arial, helvetica" size="1">
+                                <h:outputText value="Se receptarán no conformidades reclamos en 8 días hábiles a la entrega 
+                                                    del reporte de análisis de laboratorio teniendo en cuenta las caracteristicas
+                                                    de la muestra y de los análisis respectivos."/>
+                           </font></td> 
+                        </tr>          
+                                   
+                         <tr> 
+                           <td valign="top"><font face="verdana, arial, helvetica" size="1">
+                                <h:outputText value="5." />      
+                           </font></td> 
+                           
+                           <td><font face="verdana, arial, helvetica" size="1">
+                                <h:outputText value="El cliente deberá cancelar el valor total de análisis 
+                                                    requerido previo a la obtención de los resultados del mismo."/>
+                           </font></td> 
+                        </tr>          
+                        
+                                   
+                        <tr> 
+                           <td valign="top"><font face="verdana, arial, helvetica" size="1">
+                                <h:outputText value="6." />      
+                           </font></td> 
+                           
+                           <td><font face="verdana, arial, helvetica" size="1">
+                                <h:outputText value="El laboratorio se rige por disposiciones 
+                                              legales vigentes y según los estatutos de la Universidad."/>
+                           </font></td> 
+                        </tr>
+                           </table> 
+                           </td> 
+                        </tr> 
+                        </table>
+                
+                 </h:form> 
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

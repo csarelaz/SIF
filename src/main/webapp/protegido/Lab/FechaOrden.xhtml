@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/plantilla.xhtml">
+
+            <ui:define name="content">
+                <div id="tblactivoscss">
+                 <h:form id="frmPrincipal">
+                    <p:messages autoUpdate="true" showSummary="false" showDetail="true"/>
+                    <h1 align="center">Buscar Ordenes por Fecha</h1>
+                    
+                    <h:panelGrid columns="3" >
+                        <p:outputLabel for="FechaOrdenD" value="Desde" />
+                        <p:calendar id="FechaOrdenD" locale="es" value="#{ordenControllerReport.fechaDesde}" pattern="dd/MM/yyyy" required="true"/>
+                            <p:message for="FechaOrdenD" />
+                            
+                        <p:outputLabel for="FechaOrdenH" value="Hasta" />
+                        <p:calendar id="FechaOrdenH" locale="es" value="#{ordenControllerReport.fechahasta}" pattern="dd/MM/yyyy" required="true"/>
+                            <p:message for="FechaOrdenH" /> 
+                            
+                            <p:commandButton icon="ui-icon-search" value="Buscar por Fecha" actionListener="#{ordenControllerReport.mostrarDialog()}" update=":dialogotbl"/>
+                    
+                    </h:panelGrid>
+                </h:form> 
+                   
+                <p:dialog id="dialogotbl" header="Ordenes por Fecha" widgetVar="dlg3" showEffect="explode" modal="true" closeOnEscape="true">
+                  <h:form>
+                   <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+                    <p:printer target=":frmtabla" />
+                    </p:commandButton>
+                       </h:form>
+                    <h:form id="frmtabla" > 
+                         <p:dataTable id ="tblorden2" widgetVar="OrdenTbl2" emptyMessage="Nigúna Orden registrada" value="#{ordenControllerReport.ordenes}" var="ordenlstr"
+                                      scrollable="true" resizableColumns="true">
+                          <f:facet name="header">
+                                    
+                                    <h:outputText value="Ordenes por Fecha" />
+                             
+                                </f:facet>                   
+                             <p:column headerText="Cédula" width="20">
+                            <h:outputText value="#{ordenlstr.cliente.CI_Cliente}" />
+                        </p:column>
+                        
+                             <p:column headerText="Nombre" width="60">
+                            <h:outputText value="#{ordenlstr.cliente.nombres_Cliente} #{ordenlstr.cliente.apellidos_Cliente}" />
+                        </p:column>
+
+                        <p:column headerText="Laboratorio" width="50">
+                            <h:outputText value="#{ordenlstr.departamento.nombre_Dep}" />
+                        </p:column>
+
+                             <p:column headerText="N°Orden" width="15">
+                            <h:outputText value="#{ordenlstr.idOrdenes}"  />
+                        </p:column>
+                        
+                             <p:column headerText="Estado" width="30">
+                        <h:outputText value="#{ordenlstr.estado}" />
+                
+                        </p:column>
+           
+                             <p:column headerText="Fecha" width="30">
+                                                       
+                            <h:outputText value="#{ordenlstr.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>                        
+                        
+                             <p:column headerText="Total" width="30" >
+                            <h:outputText value="#{ordenlstr.totalorden}">
+                                <f:convertNumber type="currency" currencySymbol="$" />
+                             </h:outputText>
+                        </p:column>
+                               <f:facet name="footer">
+                                    <p:column colspan="2" style="text-align:right">
+                                    <h:outputText value="Total:" />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{ordenControllerReport.totaG}">
+                                        <f:convertNumber type="currency" currencySymbol="$" />
+                                    </h:outputText>
+                                </p:column>
+                                </f:facet>
+         
+                        </p:dataTable> 
+                    </h:form> 
+                </p:dialog>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,207 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/plantilla.xhtml">
+
+            <ui:define name="content">
+               <div id="activoscss">
+                
+                <h:form>
+                      <p:messages id="mensaje" autoUpdate="false" severity="info, fatal" showSummary="true" showDetail="true"/>
+                    <p:fieldset legend="Ingresar Nuevo Activo" >
+                        <h:panelGrid columns="3" id="pgDatos">
+                            
+                            <p:outputLabel for="TipoBien" value="Tipo de Bienes: " />
+
+                            <p:selectOneMenu id ="TipoBien" value="#{activoController.tipobien.cod_TipoBien}" required="true">
+                            <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>    
+                            <f:selectItems value="#{activoController.tiposbien}" var ="TipoBienlst1" itemLabel="#{TipoBienlst1.datosAdicionales}" itemValue="#{TipoBienlst1.cod_TipoBien}"/>
+                            </p:selectOneMenu>   
+                            <p:message for="TipoBien" />
+                            
+                            <p:outputLabel for="entidad" value="Entidad:" />
+                            <p:inputText id="entidad" value="#{activoController.activo.entidad}" required="true"/>
+                            <p:message for="entidad" />
+                            
+                            <p:outputLabel for="Uejecutora" value="Estado del acta" />
+                            <p:inputText id="Uejecutora" value="#{activoController.activo.unidadEjecutora}" required="true"/>
+                            <p:message for="Uejecutora" />
+                            
+                            <p:outputLabel for="UDes" value="Item/Renglón:" />
+                            <p:inputText id="UDes" value="#{activoController.activo.unidadDesconcentrada}" required="true"/>
+                            <p:message for="UDes" />
+
+                            <p:outputLabel for="Nbodega" value="Bodega:" />
+                            <p:inputText id="Nbodega" value="#{activoController.activo.numBodega}" required="true"/>
+                            <p:message for="Nbodega" />
+
+                            <p:outputLabel for="AF" value="Activo Fijo (BLD) o Control Administrativo (BCA):" />
+                            <p:selectOneMenu id="AF" value="#{activoController.activo.actFijoContAdmin}">
+                                <f:selectItem itemLabel="Seleccione uno" itemValue="" />
+                                <f:selectItem itemLabel="BDL" itemValue="BDL" />
+                                <f:selectItem itemLabel="BCA" itemValue="BCA" />
+                            </p:selectOneMenu>
+                            <p:message for="AF" />
+
+                            <p:outputLabel for="FI" value="Fecha de ingreso:" />
+                            <p:calendar id="FI" value="#{activoController.activo.fecha_Ingreso}" required="true"/>
+                            <p:message for="FI" />
+
+                            <p:outputLabel for="FormaIng" value="Forma de Ingreso del Bien: " />
+                            <p:inputText id="FormaIng" value="#{activoController.activo.formaingreso}" required="true"/>
+                            <p:message for="FormaIng" />
+
+                            <p:outputLabel for="CodAnt" value="Código del Bien Padre:" />
+                            <p:selectOneMenu id ="CodAnt" value="#{activoController.activo.idActivos}">
+                                  <f:selectItem itemLabel="Seleccione" itemValue=""/>
+                                  <f:selectItems value="#{activoController.activos}" var ="actlst" itemLabel="#{actlst.identificador}, #{actlst.descripcion}" itemValue="#{actlst.idActivos}"/>
+                            </p:selectOneMenu>
+                            <p:message for="CodAnt" />
+
+                            <p:outputLabel for="CatBienes" value="Bien:" />
+                            <p:inputText id="CatBienes" value="#{activoController.activo.catBienes}" required="true"/>
+                            <p:message for="CatBienes" />
+
+                            <p:outputLabel for="Identificador" value="Identificador:" />
+                            <p:inputText id="Identificador" value="#{activoController.activo.identificador}" required="true"/>
+                            <p:message for="Identificador" />                            
+
+                            <p:outputLabel for="txtNombreActivo" value="Descripción:" />
+                            <p:inputText id="txtNombreActivo" value="#{activoController.activo.descripcion}"/>
+                            <p:message for="txtNombreActivo" />
+                            
+                            <p:outputLabel for="OrigenIng" value="Origen del Ingreso:" />
+                            <p:inputText id="OrigenIng" value="#{activoController.activo.origenIngreso}" required="true"/>
+                             <p:message for="OrigenIng" />
+                             
+                            <p:outputLabel for="DocRes" value="Tipo de Documento de Respaldo" />
+                            <p:inputText id="DocRes" value="#{activoController.activo.tipoDocResp}" required="true"/>
+                            <p:message for="DocRes" />
+                            
+                            <p:outputLabel for="ClasRes" value="Clases de Documento de Respaldo" />
+                            <p:inputText id="ClasRes" value="#{activoController.activo.clasesDocResp}" required="true"/>
+                            <p:message for="ClasRes" />
+                            
+                            <p:outputLabel for="TipoComp" value="Tipo de Comprobante::" />
+                            <p:inputText id="TipoComp" value="#{activoController.activo.tipoComp}" required="true"/>
+                            <p:message for="TipoComp" />
+                            
+                            <p:outputLabel for="FechaComp" value="Fecha Término Depreciación:" />
+                            <p:calendar id="FechaComp" value="#{activoController.activo.fechaComp}"/>
+                            <p:message for="FechaComp" />
+                            
+                            <p:outputLabel for="CodAct" value="Código del Bien:" />
+                            <p:inputText id="CodAct" value="#{activoController.activo.cod_Actual}" required="true"/>
+                            <p:message for="CodAct" />
+                            
+                            <p:outputLabel for="EstFisico" value="Condición del Bien" />
+                            <p:selectOneMenu id="EstFisico" value="#{activoController.activo.estadoFisico}">
+                                <f:selectItem itemLabel="Seleccione Uno" itemValue="" />
+                                <f:selectItem itemLabel="Bueno" itemValue="Bueno" />
+                                <f:selectItem itemLabel="Malo" itemValue="Malo" />
+                                <f:selectItem itemLabel="Regular" itemValue="Regular" />
+                            </p:selectOneMenu>
+                            <p:message for="EstFisico" />
+                            
+                            <p:outputLabel for="CostAdq" value="Valor de Compra:" />
+                            <p:inputText id="CostAdq" value="#{activoController.activo.costo}" required="true"/>
+                            <p:message for="CostAdq" />
+                            
+                            <p:outputLabel for="Depre" value="Depreciable" />
+                            <p:selectOneMenu id="Depre" value="#{activoController.activo.depreciacion}">
+                                <f:selectItem itemLabel="Si" itemValue="S" />
+                                <f:selectItem itemLabel="No" itemValue="N" />
+                            </p:selectOneMenu>
+                            <p:message for="Depre" />
+                            
+                            <p:outputLabel for="txtnomina" value="Custodio:" />
+                            <p:selectOneMenu id ="txtnomina" value="#{activoController.nomina.idNomina}" required="true">
+                                <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
+                                  <f:selectItems value="#{activoController.nominas}" var ="nomlst1" itemLabel="#{nomlst1.nombres} , #{nomlst1.apellidos}" itemValue="#{nomlst1.idNomina}"/>
+                            </p:selectOneMenu>
+                            <p:message for="txtnomina" />
+                            
+                            <p:outputLabel for="txtdependencia" value="Ubicación:" />
+                            <p:selectOneMenu id ="txtdependencia" value="#{activoController.dependencia.idDependencia}" required="true" >
+                                 <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
+                                  <f:selectItems value="#{activoController.dependencias}" var ="deplst1" itemLabel="#{deplst1.referencia_Dep}, #{deplst1.descripcion_Dep}" itemValue="#{deplst1.idDependencia}"/>
+                            </p:selectOneMenu>
+                            <p:message for="txtdependencia" />
+                            
+                             <p:outputLabel for="txtSerie" value="Numero de Série:" />
+                            <p:inputText id="txtSerie" value="#{activoController.activo.serie}" required="true"/>                          
+                            <p:message for="txtSerie" />
+                            
+                            <p:outputLabel for="txtModelo" value="Modelo:" />
+                            <p:inputText id="txtModelo" value="#{activoController.activo.modelo}" required="false"/>
+                            <p:message for="txtModelo" />
+                            
+                            <p:outputLabel for="txtMarca" value="Marca:" />
+                            <p:inputText id="txtMarca" value="#{activoController.activo.marca}" required="false"/>
+                            <p:message for="txtMarca" />
+                            
+                            <p:outputLabel for="ParPre" value="Partidas Presupuestarias:" />
+                            <p:inputText id="ParPre" value="#{activoController.activo.partPresup}" />
+                            <p:message for="ParPre" />
+                            
+                            <p:outputLabel for="ItemPre" value="Ítem Prespuestario/ Renglón:" />
+                            <p:inputText id="ItemPre" value="#{activoController.activo.itemPresup}" />
+                            <p:message for="ItemPre" />
+                            
+                            <p:outputLabel for="CodPro" value="Código Tipo de Proyecto:" />
+                            <p:inputText id="CodPro" value="#{activoController.activo.codTipoProy}"/>
+                            <p:message for="CodPro" />
+                                                        
+                            <p:outputLabel for="CodCue" value="Código de la Cuenta Contable:" />
+                            <p:inputText id="CodCue" value="#{activoController.activo.codCuentaCont}" required="true"/>
+                            <p:message for="CodCue" />
+                            
+                            <p:outputLabel for="Vcont" value="Valor Contable:" />
+                            <p:inputText id="Vcont" value="#{activoController.activo.valContable}" required="true"/>
+                            <p:message for="Vcont" />
+                            
+                            <p:outputLabel for="Vresi" value="Valor Residual:" />
+                            <p:inputText id="Vresi" value="#{activoController.activo.valResidual}" required="true"/>
+                            <p:message for="Vresi" />
+                            
+                            <p:outputLabel for="Vlibros" value="Valor en Libros:" />
+                            <p:inputText id="Vlibros" value="#{activoController.activo.valLibros}" required="true"/>
+                            <p:message for="Vlibros" />
+                            
+                            <p:outputLabel for="Vdepacu" value="Valor Depreciación Acumulada:" />
+                            <p:inputText id="Vdepacu" value="#{activoController.activo.valDepAcum}" required="true"/>
+                            <p:message for="Vdepacu" />
+                            
+                            <p:outputLabel for="FechaDep" value="Fecha de la última depreciación:" />
+                            <p:calendar id="FechaDep" value="#{activoController.activo.fechaDep}" required="true"/>
+                            <p:message for="FechaDep" />
+                            
+                            <p:outputLabel for="VUtil" value="Vida Útil:" />
+                            <p:inputText id="VUtil" value="#{activoController.activo.vidaUtil}" required="true"/>
+                            <p:message for="VUtil" />
+                            
+                            <p:outputLabel for="Dadicc" value="Datos Adicionales:" />
+                            <p:inputTextarea  id="Dadicc" value="#{activoController.activo.observaciones}"/>
+                            <p:message for="Dadicc" />
+                           
+                            
+                        </h:panelGrid>
+                    </p:fieldset>
+                      <p:commandButton icon="ui-icon-check" value="Registrar" update="pgDatos, mensaje" actionListener="#{activoController.registrar()}"/>
+                        
+                </h:form>
+                    
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

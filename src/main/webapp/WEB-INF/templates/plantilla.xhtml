@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <h:graphicImage library="images" name="UCE.png" alt="bannersif" width="1350" height="100" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />      
+       
+        <style type="text/css">
+            body{
+                background-color:whitesmoke;
+                
+            }
+            #idbanner{
+                display:block;
+                width:30px;
+                height:60px;
+                margin:auto;
+            }
+        </style>
+        <title>SIF </title>            
+        <h:outputStylesheet library="css" name="index.css"/>
+        <title>Facelets Template</title>
+        <f:event type="preRenderView" listener="#{plantillaController.verificarSesion()}" />        
+    </h:head>
+
+    <h:body>
+        <a id="idbanner" href="#" title="SIF">
+            <canvas id="canvas" width="30" height="60">
+
+            </canvas>
+        </a>
+        <div id="top">
+            <ui:insert name="top">
+                <h:form>
+                    <p:menubar model="#{menuController.model}" >
+                        <f:facet name="options" >                            
+                            <p:commandButton actionListener="#{menuController.cerrarSesion()}" icon="ui-icon-power" action="/index?faces-redirect=true" title="Cerrar Sesión"/>                            
+                        </f:facet> 
+                    </p:menubar> 
+                </h:form>                                        
+
+            </ui:insert>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+
+        <div id="bottom" style="text-align: center">
+            <ui:insert name="bottom" >
+                
+                <p>Facultad de Ingenieria Ciencias Fisicas y Matemática</p>
+            
+            </ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

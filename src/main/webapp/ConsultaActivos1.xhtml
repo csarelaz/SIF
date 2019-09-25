@@ -1,0 +1,273 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Consultar Activos</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+              <p:growl autoUpdate="true" showDetail="true" showSummary="false"/>
+               
+                <h:form id="frmPrincipal">
+                    <h1 align="center">Consultar Activos </h1>
+                <h:panelGrid columns="3" >   
+                    
+                    <p:outputLabel for="idNomina" value="Digite su cédula" />
+                    <p:selectOneMenu id="idNomina" value="#{consultaActivoController.nomina.idNomina}" label="Cedula" filter="True" filterMatchMode="startsWith" style="width:250px">
+                        <f:selectItems value="#{consultaActivoController.nominas}" var="act" itemLabel="#{act.CI}" itemValue="#{act.idNomina}" />
+                            <f:selectItem itemLabel="SELECCIONE" itemValue="#{null}" noSelectionOption="true" />                            
+                        </p:selectOneMenu>
+                        
+                    <p:commandButton icon="ui-icon-search" value="Buscar" actionListener="#{consultaActivoController.BuscarCI()}" update="tabla"/>
+                </h:panelGrid>
+                        
+                    <p:dataTable id="tabla" emptyMessage="Nigún activo registrado" value="#{consultaActivoController.activos}" var="act" 
+                            paginator="true" rows="10"
+                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            rowsPerPageTemplate="5,10,15,20" currentPageReportTemplate="Página: ({currentPage} de {totalPages})">
+                       
+                        <f:facet name="header">
+                        <p:commandButton id="toggler" type="button" value="Editar Columnas" style="float:right" icon="ui-icon-calculator" />
+                        <p:columnToggler datasource="tabla" trigger="toggler" />
+                        </f:facet>
+                    
+
+                        <p:column headerText="Tipo de Bien" filterBy="#{act.idCodTipoBien.datosAdicionales}" filterMatchMode="contains" >
+                            <h:outputText value="#{act.idCodTipoBien.datosAdicionales}" />
+                        </p:column>
+                    
+                        <p:column headerText="Identificador" filterBy="#{act.identificador}" filterMatchMode="contains" >
+                            <h:outputText value="#{act.identificador}" />
+                        </p:column>
+                        
+                        <p:column headerText="Descripción" filterBy="#{act.descripcion}" filterMatchMode="contains">
+                            <h:outputText value="#{act.descripcion}" />
+                        </p:column>
+                    
+                        <p:column headerText="Fecha de Ingreso" filterBy="#{act.fecha_Ingreso}" filterMatchMode="contains">
+                            <h:outputText value="#{act.fecha_Ingreso}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                        </p:column>
+                    
+                        <p:column headerText="Código Actual" filterBy="#{act.cod_Actual}" filterMatchMode="contains">
+                            <h:outputText value="#{act.cod_Actual}" />
+                        </p:column>
+                    
+                    <p:column headerText="Estado Fisico" filterBy="#{act.estadoFisico}" filterMatchMode="contains">
+                        <h:outputText value="#{act.estadoFisico}" />
+                        </p:column>
+                    
+                    <p:column headerText="Nombre Custodio" filterBy="#{act.idNomina.nombres}" filterMatchMode="contains">
+                            <h:outputText value="#{act.idNomina.nombres} #{act.idNomina.apellidos}" />
+                        </p:column>
+                    
+                    <p:column headerText="Numero Ubicación" filterBy="#{act.idDependencia.referencia_Dep}" filterMatchMode="contains">
+                        <h:outputText value="#{act.idDependencia.referencia_Dep}" />
+                        </p:column>
+                    
+                        <p:rowExpansion>
+                            
+                            <p:accordionPanel>
+                                <p:tab title="ENTIDAD">
+                                    <h:panelGrid columns="2" columnClasses="label,value" cellpadding="10">
+                                        
+                                        <h:outputText value="Tipo de Bienes: " />
+                                        <h:outputText value="#{act.idCodTipoBien.datosAdicionales}" />
+                                        
+                                        <h:outputText value="Entidad: " />
+                                        <h:outputText value="#{act.entidad}" />
+                                        
+                                        <h:outputText value="Unidad Ejecutora: " />
+                                        <h:outputText value="#{act.unidadEjecutora}" />
+                                        
+                                        <h:outputText value="Unidad Desconcentrada: " />
+                                        <h:outputText value="#{act.unidadDesconcentrada}" />
+                                        
+                                    </h:panelGrid>
+                                </p:tab>
+                      
+                                <p:tab title="INFORMACIÓN BÁSICA DEL BIEN">
+                                    <h:panelGrid columns="2" columnClasses="label,value" cellpadding="10">
+                                        
+                                        <h:outputText value="Número de la Bodega: " />
+                                        <h:outputText value="#{act.numBodega}" />
+                                        
+                                        <h:outputText value="Activo Fijo (BLD) o Control Administrativo (BCA): " />
+                                        <h:outputText value="#{act.actFijoContAdmin}" />
+                                        
+                                        <h:outputText value="Fecha de ingreso del Bien de Larga Duración: " />
+                                        <h:outputText value="#{act.fecha_Ingreso}" />
+                                        
+                                        <h:outputText value="Forma de Ingreso del Bien: " />
+                                        <h:outputText value="#{act.formaingreso}" />
+                                        
+                                        <h:outputText value="Código del Bien Padre: " />
+                                        <h:outputText value="#{act.idACTIVOAdj}" />
+                                        
+                                        <h:outputText value="Catálogo de Bienes: " />
+                                        <h:outputText value="#{act.catBienes}" />
+                                        
+                                        <h:outputText value="Identificador: " />
+                                        <h:outputText value="#{act.identificador}" />
+                                        
+                                        <h:outputText value="Descripción: " />
+                                        <h:outputText value="#{act.descripcion}" />
+                                        
+                                        <h:outputText value="Origen del Ingreso: " />
+                                        <h:outputText value="#{act.origenIngreso}" />
+                                        
+                                        <h:outputText value="Tipo de Documento de Respaldo: " />
+                                        <h:outputText value="#{act.tipoDocResp}" />
+                                        
+                                        <h:outputText value="Clases de Documento de Respaldo: " />
+                                        <h:outputText value="#{act.clasesDocResp}" />
+                                        
+                                        <h:outputText value="Tipo de Comprobante: " />
+                                        <h:outputText value="#{act.tipoComp}" />
+                                        
+                                        <h:outputText value="Fecha del Comprobante: " />
+                                        <h:outputText value="#{act.fechaComp}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                             </h:outputText>
+                                        
+                                        <h:outputText value="Código Actual: " />
+                                        <h:outputText value="#{act.cod_Actual}" />
+                                        
+                                        <h:outputText value="Estado Físico" />
+                                        <h:outputText value="#{act.estadoFisico}" />
+                                        
+                                        <h:outputText value="Costo de Adquisición: " />
+                                        <h:outputText value="#{act.costo}">
+                                        <f:convertNumber type="currency" currencySymbol="$" />
+                                        </h:outputText>
+                                        
+                                        <h:outputText value="Depreciación" />
+                                        <h:outputText value="#{act.depreciacion}" />
+                                    </h:panelGrid>
+                                </p:tab>
+                                
+                                <p:tab title="DATOS DEL CUSTODIO ACTUAL">
+                                    <h:panelGrid columns="2" columnClasses="label,value" cellpadding="10">
+                                        
+                                        <h:outputText value="Nº Cédula /No. Pasaporte: " />
+                                        <h:outputText value="#{act.idNomina.CI}" />
+                                        
+                                        <h:outputText value="Nombre Custodio o Usuario: " />
+                                        <h:outputText value="#{act.idNomina.nombres} #{act.idNomina.apellidos}" />
+                                        
+                                        <h:outputText value="Número de la Ubicación: " />
+                                        <h:outputText value="#{act.idDependencia.referencia_Dep}" />
+                                        
+                                        <h:outputText value="Nombre Ubicación: " />
+                                        <h:outputText value="#{act.idDependencia.descripcion_Dep}" />
+                                        
+                                        <h:outputText value="Lugar Ubicación: " />
+                                        <h:outputText value="#{act.idDependencia.lugar_Dep}" />
+                                        
+                                        <h:outputText value="Referencia Ubicación: " />
+                                        <h:outputText value="#{act.idDependencia.referencia_Dep}" />
+       
+                                    </h:panelGrid>
+                                </p:tab>
+                                
+                                <p:tab title="CARACTERÍSTICAS BÁSICAS DEL BIEN">
+                                    <h:panelGrid columns="2" columnClasses="label,value" cellpadding="10">
+                                        
+                                        <h:outputText value="Serie: " />
+                                        <h:outputText value="#{act.serie}" />
+                                        
+                                        <h:outputText value="Modelo: " />
+                                        <h:outputText value="#{act.modelo}" />
+                                        
+                                        <h:outputText value="Marca: " />
+                                        <h:outputText value="#{act.marca}" />
+                                        
+                                    </h:panelGrid>
+                                </p:tab>
+                                
+                                <p:tab title="DETALLE DE INFORMACIÓN PRESUPUESTARIA">
+                                    <h:panelGrid columns="2" columnClasses="label,value" cellpadding="10">
+                                        
+                                        <h:outputText value="Partidas Presupuestarias: " />
+                                        <h:outputText value="#{act.partPresup}" />
+                                        
+                                        <h:outputText value="Ítem Prespuestario/ Renglón: " />
+                                        <h:outputText value="#{act.itemPresup}" />
+                                        
+                                        <h:outputText value="Código Tipo de Proyecto: " />
+                                        <h:outputText value="#{act.codTipoProy}" />
+                                        
+                                        <h:outputText value="Código de la Cuenta Contable: " />
+                                        <h:outputText value="#{act.codTipoProy}" />
+                                        
+                                    </h:panelGrid>
+                                </p:tab>
+                                
+                                <p:tab title="DETALLE DE INFORMACIÓN FINANCIERA">
+                                    <h:panelGrid columns="2" columnClasses="label,value" cellpadding="10">
+                                        
+                                        <h:outputText value="Valor Contable: " />
+                                        <h:outputText value="#{act.valContable}">
+                                        <f:convertNumber type="currency" currencySymbol="$" />
+                                        </h:outputText>
+                                        
+                                        <h:outputText value="Valor Residual: " />
+                                        <h:outputText value="#{act.valResidual}">
+                                        <f:convertNumber type="currency" currencySymbol="$" />
+                                        </h:outputText>
+                                        
+                                        <h:outputText value="Valor en Libros: " />
+                                        <h:outputText value="#{act.valLibros}">
+                                        <f:convertNumber type="currency" currencySymbol="$" />
+                                        </h:outputText>
+                                        
+                                        <h:outputText value="Valor Depreciación Acumulada: " />
+                                        <h:outputText value="#{act.valDepAcum}">
+                                        <f:convertNumber type="currency" currencySymbol="$" />
+                                        </h:outputText>
+                                        
+                                        <h:outputText value="Fecha de la última depreciación: " />
+                                        <h:outputText value="#{act.fechaDep}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                         </h:outputText>
+                                        
+                                        <h:outputText value="Vida Útil: " />
+                                        <h:outputText value="#{act.vidaUtil}" />
+                                        
+                                        
+    
+                                    </h:panelGrid>
+                                </p:tab>
+                                
+                                <p:tab title="INFORMACIÓN ADICIONAL">
+                                    <h:panelGrid columns="2" columnClasses="label,value" cellpadding="10">
+                                        
+                                        <h:outputText value="Datos Adicionales: " />
+                                        <h:outputText value="#{act.observaciones}" />
+                                        
+  
+                                    </h:panelGrid>
+                                </p:tab>
+                                
+                            </p:accordionPanel>
+                            
+                        </p:rowExpansion>
+
+                    </p:dataTable>
+ 
+                    
+               </h:form>
+        </h:body>
+
+    </f:view>
+</html>
+

@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/plantilla.xhtml">
+
+            <ui:define name="content">
+                  <p:growl autoUpdate="true" showDetail="true" showSummary="false"/>
+                  <div id="tblactivoscss">
+                 <h:form id="frmPrincipal">
+                     <h1 align="center">Administración de Servicios</h1>
+                    <p:commandButton icon="ui-icon-plusthick" value="Nuevo" actionListener="#{articulosController.mostrarDialogo()}" update=":frmDialogo"/>
+
+                    <p:dataTable id="tabla" emptyMessage="Nigún Articulo registrado" value="#{articulosController.articulos}" var="art"
+                                 editable="true"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15,20" currentPageReportTemplate="Página: ({currentPage} de {totalPages})">
+
+                        <p:column style="width:32px">
+                            <p:rowEditor />
+                        </p:column>
+
+                        <p:column headerText="Descripcion Servicio" filterBy="#{art.descripcion_Art}" filterMatchMode="contains" >
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                       <h:outputText value="#{art.descripcion_Art}" />
+                                </f:facet>
+
+                                <f:facet name="input">
+                                    <p:inputText value="#{art.descripcion_Art}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Costo Servicio">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                        <h:outputText value="#{art.costo_Art}">
+                                         <f:convertNumber type="currency" currencySymbol="$" />
+                                        </h:outputText>
+                                </f:facet>
+
+                                <f:facet name="input">
+                                    <p:inputText value="#{art.costo_Art}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Porcentaje IVA">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{art.iva}">
+                                        <f:convertNumber type="currency" currencySymbol="%" minFractionDigits="0"/> 
+                                        </h:outputText>
+                                </f:facet>
+
+                                <f:facet name="input">
+                                    <p:inputText value="#{art.iva}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Modificable" filterBy = "#{art.modificable}" filterMatchMode="contains" >
+                            <p:cellEditor>
+                                
+                                <f:facet name="output">
+                                    <h:outputText value="#{art.modificable}" />
+                                </f:facet>
+
+                                <f:facet name="input">
+                                    <p:selectOneMenu id ="modificable" value="#{art.modificable}" >
+                                        <f:selectItem itemLabel="SI" itemValue="SI" />
+                                        <f:selectItem itemLabel="No" itemValue="NO" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        
+                        <p:column headerText="Departamento" filterBy="#{art.idDepartamento.nombre_Dep}" filterMatchMode="contains">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{art.idDepartamento.nombre_Dep}" />
+                                </f:facet>
+
+                                <f:facet name="input">
+                                    <p:selectOneMenu id ="codDepartamento" value="#{articulosController.deparatamento.idDepartamento}" >
+                                        <f:selectItems value="#{articulosController.departamentos}" var ="deplst" itemLabel="#{deplst.nombre_Dep}" itemValue="#{deplst.idDepartamento}"/>
+                                  </p:selectOneMenu>
+                                </f:facet>
+                                
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:ajax event="rowEdit" listener="#{articulosController.modificar(art)}" />
+ 
+                        
+                    </p:dataTable>
+                </h:form> 
+                  
+             <p:dialog id="dialogo" widgetVar="wdialogo" header="Agregar Servicio" modal="true" resizable="false" closeOnEscape="true" draggable="false">
+                    <h:form id="frmDialogo">
+                        <h:panelGrid columns="2">
+                            <p:outputLabel for="txtArticulo" value="Artículo" />
+                            <p:inputText id="txtArticulo" required="true" value="#{articulosController.articulo.descripcion_Art}"/>
+                            <p:outputLabel for="txtCosto" value="Costo" />
+                            <p:inputText id="txtCosto" required="true" value="#{articulosController.articulo.costo_Art}"/>
+                            
+                            <p:outputLabel for="iva" value="iva" />
+                            <p:inputText id="iva" required="true" value="#{articulosController.articulo.iva}"/>
+                            
+                            <p:outputLabel for="modificable" value="Editable" />
+                                    <p:selectOneButton id ="modificable" value="#{articulosController.articulo.modificable}">
+                                        <f:selectItem itemLabel="SI" itemValue="SI" />
+                                        <f:selectItem itemLabel="No" itemValue="NO" />
+                                    </p:selectOneButton>
+
+                            
+                            <p:outputLabel for="Departamento" value="Departamento" />
+                            <p:selectOneMenu id ="Departamento" value="#{articulosController.deparatamento.idDepartamento}" >
+                                <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>         
+                                <f:selectItems value="#{articulosController.departamentos}" var ="deplst" itemLabel="#{deplst.nombre_Dep}" itemValue="#{deplst.idDepartamento}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:commandButton value="Registrar" icon="ui-icon-check" update=":frmPrincipal:tabla" actionListener="#{articulosController.registrar()}" oncomplete="PF('wdialogo').hide();" rendered="#{articulosController.accion == 'R'}"/>
+                            <p:commandButton value="Modificar" icon="ui-icon-check" update=":frmPrincipal:tabla" actionListener="#{articulosController.modificar()}" oncomplete="PF('wdialogo').hide();" rendered="#{articulosController.accion == 'M'}"/>
+                            <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" />
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog> 
+                  
+                  </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
